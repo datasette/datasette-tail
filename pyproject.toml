@@ -1,6 +1,6 @@
 [project]
 name = "datasette-tail"
-version = "0.1a0"
+version = "0.1a1"
 description = "Tools for tailing your database"
 readme = "README.md"
 authors = [{name = "Simon Willison"}]
@@ -11,7 +11,7 @@ classifiers=[
 ]
 requires-python = ">=3.8"
 dependencies = [
-    "datasette>=1.0a12",
+    "datasette==1.0a19",
     "dictdiffer"
 ]
 
