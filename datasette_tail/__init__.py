@@ -1,4 +1,5 @@
 from datasette import hookimpl, Forbidden, Response
+from datasette.resources import DatabaseResource
 import dictdiffer
 import json
 from markupsafe import escape
@@ -7,8 +8,8 @@ from markupsafe import escape
 @hookimpl
 def database_actions(datasette, actor, database):
     async def inner():
-        if await datasette.permission_allowed(
-            actor, "view-database", resource=database
+        if await datasette.allowed(
+            actor=actor, action="view-database", resource=DatabaseResource(database)
         ):
             return [
                 {
@@ -22,8 +23,8 @@ def database_actions(datasette, actor, database):
 
 async def _shared(datasette, request):
     database = request.url_vars["database"]
-    if not await datasette.permission_allowed(
-        request.actor, "view-database", resource=database
+    if not await datasette.allowed(
+        actor=request.actor, action="view-database", resource=DatabaseResource(database)
     ):
         raise Forbidden("view-database permission is required")
 
